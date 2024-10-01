@@ -46,7 +46,7 @@ export class AuthorService {
       const author = await this.authorRepository
         .createQueryBuilder('authors')
         .leftJoinAndSelect('authors.books', 'books')
-        .where('books.id = :id', { id }) // Explicitly reference the 'books' table's 'id'
+        .where('authors.id = :id', { id }) // Explicitly reference the 'books' table's 'id'
         .getOne();
 
       if (!author) {
