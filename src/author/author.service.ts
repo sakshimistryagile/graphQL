@@ -20,16 +20,18 @@ export class AuthorService {
       await this.authorRepository.save(author);
       return author;
     } catch (error) {
-      throw notFoundError(error.errors);
+      throw notFoundError(error);
     }
   }
 
-  async findAll(page: number = 1, limit: number = 4) {
+  async findAll(page: number = 1, limit: number = 4, birthDate) {
     try {
       const skip = (page - 1) * limit;
-
-      const [authors, totalCount] = await this.authorRepository
-        .createQueryBuilder('author')
+      const query = await this.authorRepository.createQueryBuilder('author');
+      if (birthDate) {
+        query.andWhere('author.birthDate = :birthDate', { birthDate });
+      }
+      const [authors, totalCount] = await query
         .leftJoinAndSelect('author.books', 'books')
         .skip(skip)
         .take(limit)
@@ -37,7 +39,7 @@ export class AuthorService {
 
       return { authors, totalCount };
     } catch (error) {
-      throw notFoundError(error.errors);
+      throw notFoundError(error);
     }
   }
 
@@ -76,7 +78,7 @@ export class AuthorService {
       }
       return updatedAuthor;
     } catch (error) {
-      throw notFoundError(error.errors);
+      throw notFoundError(error);
     }
   }
 
@@ -94,7 +96,7 @@ export class AuthorService {
         .execute();
       return deleteAuthor;
     } catch (error) {
-      throw notFoundError(error.errors);
+      throw notFoundError(error);
     }
   }
 }

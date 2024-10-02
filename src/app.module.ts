@@ -8,20 +8,24 @@ import { Author } from './schemas/author.schema';
 import { Books } from './schemas/books.schema';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-// import { join } from 'path';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      ignoreEnvFile: false,
+      isGlobal: true,
+    }),
     AuthorModule,
     BooksModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: process.env.DATABASE_HOST,
       port: 5432,
-      password: 'root',
-      username: 'postgres',
+      password: process.env.DATABASE_PASSWORD,
+      username: process.env.DATABASE_USERNAME,
       entities: [Author, Books],
-      database: 'assessment_graphql',
+      database: process.env.DATABASE_NAME,
       synchronize: true,
       logging: true,
     }),

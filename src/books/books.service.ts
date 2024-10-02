@@ -42,7 +42,7 @@ export class BooksService {
       return book;
     } catch (error) {
       console.log(error);
-      throw notFoundError(error.errors);
+      throw notFoundError(error);
     }
   }
 
@@ -59,7 +59,7 @@ export class BooksService {
 
       return { books, totalCount };
     } catch (error) {
-      throw notFoundError(error.errors);
+      throw notFoundError(error);
     }
   }
 
@@ -76,7 +76,7 @@ export class BooksService {
       }
       return book;
     } catch (error) {
-      throw notFoundError(error.errors);
+      throw notFoundError(error);
     }
   }
 

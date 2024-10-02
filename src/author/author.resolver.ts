@@ -10,7 +10,8 @@ export class AuthorResolver {
 
   @Mutation(() => Author)
   createAuthor(
-    @Args('createAuthorInput') createAuthorInput: CreateAuthorInput,
+    @Args('createAuthorInput')
+    createAuthorInput: CreateAuthorInput,
   ) {
     return this.authorService.create(createAuthorInput);
   }
@@ -19,8 +20,9 @@ export class AuthorResolver {
   findAll(
     @Args('page', { type: () => Int }) page: number,
     @Args('limit', { type: () => Int }) limit: number,
+    @Args('birthDate', { nullable: true }) birthDate?: string,
   ) {
-    return this.authorService.findAll(page, limit);
+    return this.authorService.findAll(page, limit, birthDate);
   }
 
   @Query(() => Author, { name: 'author' })

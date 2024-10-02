@@ -10,6 +10,23 @@ input CreateBookInput {
   publicationDate: String!
   authorId: Int!
 }
+input UpdateBookInput {
+  id: Int!
+  title: String!
+  publicationDate: String!
+  authorId: Int!
+}
+input CreateAuthorInput {
+  name: String!
+  birthDate: String!
+}
+
+input UpdateAuthorInput {
+  id: Int!
+  name: String!
+  birthDate: String!
+
+}
 
 type Mutation {
   createBook(createBookInput: CreateBookInput!): Book!
@@ -25,12 +42,6 @@ type BookRes{
   books:[Book!]
   totalCount:Int!
 }
-input UpdateBookInput {
-  id: Int!
-  title: String!
-  publicationDate: String!
-  authorId: Int!
-}
 
 type Author {
   id: Int!
@@ -39,10 +50,7 @@ type Author {
   books: [Book]
 }
 
-input CreateAuthorInput {
-  name: String!
-  birthDate: String!
-}
+
 
 type Mutation {
   createAuthor(createAuthorInput: CreateAuthorInput!): Author!
@@ -52,15 +60,10 @@ type Mutation {
 
 type Query {
   author(id: Int!): Author!
-  authors(page:Int!,limit:Int!): AuthorRes!
+  authors(page:Int!,limit:Int!,birthDate: String): AuthorRes!
 }
 type AuthorRes{
   authors:[Author!]
   totalCount:Int!
 }
-input UpdateAuthorInput {
-  id: Int!
-  name: String!
-  birthDate: String!
 
-}
